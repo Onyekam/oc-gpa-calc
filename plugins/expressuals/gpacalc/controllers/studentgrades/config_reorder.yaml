@@ -1,0 +1,4 @@
+title: StudentGrades
+modelClass: Expressuals\GpaCalc\Models\StudentGrade
+toolbar:
+    buttons: reorder_toolbar

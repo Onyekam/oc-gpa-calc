@@ -1,0 +1,12 @@
+list: $/expressuals/gpacalc/models/semester/columns.yaml
+modelClass: Expressuals\GpaCalc\Models\Semester
+title: Semesters
+noRecordsMessage: 'backend::lang.list.no_records'
+showSetup: true
+showCheckboxes: true
+recordsPerPage: 20
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'
+recordUrl: 'expressuals/gpacalc/semesters/update/:id'

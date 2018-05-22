@@ -1,0 +1,20 @@
+fields:
+    letter_grade:
+        label: 'Letter Grade'
+        span: auto
+        type: text
+    slug:
+        label: Slug
+        span: auto
+        preset:
+            field: letter_grade
+            type: slug
+        type: text
+    marks:
+        label: Marks
+        span: auto
+        type: text
+    grade_point:
+        label: 'Grade Point'
+        span: auto
+        type: text

@@ -1,0 +1,10 @@
+name: Semesters
+form: $/expressuals/gpacalc/models/semester/fields.yaml
+modelClass: Expressuals\GpaCalc\Models\Semester
+defaultRedirect: expressuals/gpacalc/semesters
+create:
+    redirect: 'expressuals/gpacalc/semesters/update/:id'
+    redirectClose: expressuals/gpacalc/semesters
+update:
+    redirect: expressuals/gpacalc/semesters
+    redirectClose: expressuals/gpacalc/semesters

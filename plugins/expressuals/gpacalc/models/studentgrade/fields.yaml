@@ -1,0 +1,18 @@
+fields:
+    user:
+        label: Student
+        nameFrom: name
+        span: auto
+        type: relation
+    course:
+        label: Course
+        nameFrom: name
+        descriptionFrom: description
+        span: auto
+        type: relation
+    grade:
+        label: Grade
+        nameFrom: letter_grade
+        descriptionFrom: grade_point
+        span: auto
+        type: relation

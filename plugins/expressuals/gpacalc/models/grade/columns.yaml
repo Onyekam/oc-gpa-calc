@@ -1,0 +1,16 @@
+columns:
+    letter_grade:
+        label: 'Letter Grade'
+        type: text
+        searchable: true
+        sortable: true
+    marks:
+        label: Marks
+        type: text
+        searchable: true
+        sortable: true
+    grade_point:
+        label: 'Grade Point'
+        type: text
+        searchable: true
+        sortable: true

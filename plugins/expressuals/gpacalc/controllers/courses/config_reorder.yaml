@@ -1,0 +1,4 @@
+title: Courses
+modelClass: Expressuals\GpaCalc\Models\Course
+toolbar:
+    buttons: reorder_toolbar

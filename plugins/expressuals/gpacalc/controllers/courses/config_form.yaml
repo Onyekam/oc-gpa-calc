@@ -1,0 +1,10 @@
+name: Courses
+form: $/expressuals/gpacalc/models/course/fields.yaml
+modelClass: Expressuals\GpaCalc\Models\Course
+defaultRedirect: expressuals/gpacalc/courses
+create:
+    redirect: 'expressuals/gpacalc/courses/update/:id'
+    redirectClose: expressuals/gpacalc/courses
+update:
+    redirect: expressuals/gpacalc/courses
+    redirectClose: expressuals/gpacalc/courses

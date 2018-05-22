@@ -1,0 +1,24 @@
+plugin:
+    name: 'expressuals.gpacalc::lang.plugin.name'
+    description: 'expressuals.gpacalc::lang.plugin.description'
+    author: expressuals
+    icon: oc-icon-adjust
+    homepage: ''
+navigation:
+    main-menu-item:
+        label: Semesters
+        url: expressuals/gpacalc/semesters
+        icon: icon-life-ring
+    main-menu-item2:
+        label: Grades
+        url: expressuals/gpacalc/grades
+        icon: icon-life-ring
+        sideMenu:
+            side-menu-item:
+                label: 'Student Grades'
+                url: expressuals/gpacalc/studentgrades
+                icon: icon-sitemap
+    main-menu-item3:
+        label: Courses
+        url: expressuals/gpacalc/courses
+        icon: icon-life-ring

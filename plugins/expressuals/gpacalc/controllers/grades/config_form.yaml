@@ -1,0 +1,10 @@
+name: Grades
+form: $/expressuals/gpacalc/models/grade/fields.yaml
+modelClass: Expressuals\GpaCalc\Models\Grade
+defaultRedirect: expressuals/gpacalc/grades
+create:
+    redirect: 'expressuals/gpacalc/grades/update/:id'
+    redirectClose: expressuals/gpacalc/grades
+update:
+    redirect: expressuals/gpacalc/grades
+    redirectClose: expressuals/gpacalc/grades

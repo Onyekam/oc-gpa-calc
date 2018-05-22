@@ -1,0 +1,4 @@
+title: Semesters
+modelClass: Expressuals\GpaCalc\Models\Semester
+toolbar:
+    buttons: reorder_toolbar

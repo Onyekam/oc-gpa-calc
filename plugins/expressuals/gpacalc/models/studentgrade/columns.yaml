@@ -1,0 +1,22 @@
+columns:
+    user:
+        label: Student
+        type: text
+        searchable: true
+        sortable: true
+        select: name
+        relation: user
+    course:
+        label: Course
+        type: text
+        searchable: true
+        sortable: true
+        select: course_name
+        relation: course
+    grade:
+        label: Grade
+        type: text
+        searchable: true
+        sortable: true
+        select: letter_grade
+        relation: grade

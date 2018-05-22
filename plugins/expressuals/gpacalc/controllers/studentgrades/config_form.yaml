@@ -1,0 +1,10 @@
+name: StudentGrades
+form: $/expressuals/gpacalc/models/studentgrade/fields.yaml
+modelClass: Expressuals\GpaCalc\Models\StudentGrade
+defaultRedirect: expressuals/gpacalc/studentgrades
+create:
+    redirect: 'expressuals/gpacalc/studentgrades/update/:id'
+    redirectClose: expressuals/gpacalc/studentgrades
+update:
+    redirect: expressuals/gpacalc/studentgrades
+    redirectClose: expressuals/gpacalc/studentgrades

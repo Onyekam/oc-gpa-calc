@@ -1,0 +1,18 @@
+columns:
+    course_name:
+        label: 'Course Name'
+        type: text
+        searchable: true
+        sortable: true
+    course_hours:
+        label: 'Course Hours'
+        type: text
+        searchable: true
+        sortable: true
+    semester_id:
+        label: Semester
+        type: text
+        searchable: true
+        sortable: true
+        select: title
+        relation: semester

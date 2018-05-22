@@ -1,0 +1,22 @@
+fields:
+    course_name:
+        label: 'Course Name'
+        span: auto
+        type: text
+    slug:
+        label: Slug
+        span: auto
+        preset:
+            field: course_name
+            type: slug
+        type: text
+    course_hours:
+        label: 'Course Hours'
+        span: auto
+        type: text
+    semester:
+        label: Semester
+        nameFrom: title
+        descriptionFrom: level
+        span: auto
+        type: relation
