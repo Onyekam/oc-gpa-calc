@@ -26,9 +26,29 @@ class StudentGrade extends Model
      */
     public $table = 'expressuals_gpacalc_grades_users';
 
+    // protected $primaryKey = array('grade_id','user_id', 'crs_id');
+
     public $belongsTo = [
-        'user' => 'Rainlab\User\Models\User',
+        'user' => [
+        'Rainlab\User\Models\User', 
+        'table' => 'expressuals_gpacalc_grades_users',
+        'key' => 'user_id',
+        'other_key' => 'id'
+        ],
         'grade' => 'Expressuals\GpaCalc\Models\Grade',
-        'course' => ['Expressuals\GpaCalc\Models\Course', 'key' => 'crs_id']
+        'course' => [ 
+            'Expressuals\GpaCalc\Models\Course', 'key' => 'crs_id']
     ];
+
+    // public $belongsToMany = [
+    //     'user' => [
+    //     'Rainlab\User\Models\User', 
+    //     'table' => 'expressuals_gpacalc_grades_users',
+    //     'key' => 'user_id',
+    //     'other_key' => 'id'
+    //     ],
+    //     'grade' => 'Expressuals\GpaCalc\Models\Grade',
+    //     'course' => [ 
+    //         'Expressuals\GpaCalc\Models\Course', 'key' => 'crs_id']
+    //     ];
 }

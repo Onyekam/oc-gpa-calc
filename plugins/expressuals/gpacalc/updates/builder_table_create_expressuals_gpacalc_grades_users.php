@@ -12,7 +12,8 @@ class BuilderTableCreateExpressualsGpacalcGradesUsers extends Migration
             $table->engine = 'InnoDB';
             $table->integer('grade_id');
             $table->integer('user_id');
-            $table->primary(['grade_id','user_id']);
+            $table->integer('crs_id');
+            $table->primary(['grade_id','user_id', 'crs_id']);
         });
     }
     

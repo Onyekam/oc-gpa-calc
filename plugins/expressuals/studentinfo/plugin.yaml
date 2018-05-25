@@ -1,0 +1,6 @@
+plugin:
+    name: 'expressuals.studentinfo::lang.plugin.name'
+    description: 'expressuals.studentinfo::lang.plugin.description'
+    author: expressuals
+    icon: oc-icon-adjust
+    homepage: ''

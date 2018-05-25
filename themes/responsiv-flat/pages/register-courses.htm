@@ -1,14 +1,19 @@
-title = "Demonstration"
-url = "/old home"
+title = "Register Courses"
+url = "/my-account/register-courses"
 layout = "default"
-==
+is_hidden = 0
 
-<section class="home-title">
+[session]
+[Courses]
+security = "user"
+redirect = "signin"
+==
+{# <section class="home-title">
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
-                <h3>Flat Theme for OctoberCMS</h3>
-                <p>You have the design, you have the code. We've created the product that will help your startup to look even better.</p>
+                <h3>Hi {{user.name}} {{user.surname}}</h3>
+                <p></p>
                 <div class="signup-form">
                     <form>
                         <div class="form-group">
@@ -38,9 +43,9 @@ layout = "default"
             </div>
         </div>
     </div>
-</section>
+</section> #}
 
-<section class="logos">
+{# <section class="logos">
     <div class="container">
         <div><img src="{{ 'assets/images/logos/mashable.png'|theme }}" alt=""></div>
         <div><img src="{{ 'assets/images/logos/guardian.png'|theme }}" alt=""></div>
@@ -48,7 +53,7 @@ layout = "default"
         <div><img src="{{ 'assets/images/logos/red-bull.png'|theme }}" alt=""></div>
         <div><img src="{{ 'assets/images/logos/ny-times.png'|theme }}" alt=""></div>
     </div>
-</section>
+</section> #}
 
 <br />
 
@@ -57,14 +62,12 @@ layout = "default"
     <!-- Services -->
     <div class="row our-services">
         <div class="col-sm-12">
-            <h4 class="headline"><span>What we do</span></h4>
-            <p>He hasn't got a freckle my mad as a middy. Trent from punchy maccas no dramas shazza got us some ripper. As dry as a bradman flamin lets throw a cut lunch commando.</p>
-
-            {% partial 'services' %}
+            <h4 class="headline"><span>Register Courses </span><span style="font-size:14px"><a href="{{'/my-account'}}">Go Back</a><span></h4>
+            {% partial 'courses/register-courses' %}
         </div>
     </div>
 
-    <div class="recent-tweets">
+    {# <div class="recent-tweets">
         <h4 class="headline"><span>Recent tweets</span></h4>
         <div class="tweet">
             <i class="fa fa-twitter"></i>
@@ -80,7 +83,7 @@ layout = "default"
                 <a href="#">2 days ago</a>
             </p>
         </div>
-    </div>
+    </div> #}
 
 </div>
 

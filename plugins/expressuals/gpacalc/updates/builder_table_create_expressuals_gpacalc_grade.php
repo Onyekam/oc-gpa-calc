@@ -11,10 +11,10 @@ class BuilderTableCreateExpressualsGpacalcGrade extends Migration
         {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('semester_id')->nullable();
-            $table->string('course_name');
-            $table->string('course_hours');
-            $table->integer('user_id');
+            $table->string('letter_grade', 2);
+            $table->string('marks', 10);
+            $table->string('grade_point', 5);
+            $table->string('slug', 10);
         });
     }
     

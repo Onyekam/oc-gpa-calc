@@ -1,0 +1,10 @@
+.signin-container {
+    background: #fff;
+}
+.signin-icon > h4 {
+    color: #000078;
+}
+
+.primary-btns {
+    background: #000078 !important;
+}

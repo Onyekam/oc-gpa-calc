@@ -14,6 +14,7 @@ class BuilderTableCreateExpressualsGpacalcCourses extends Migration
             $table->string('course_name');
             $table->string('course_hours');
             $table->integer('semester_id');
+            $table->string('slug');
         });
     }
     

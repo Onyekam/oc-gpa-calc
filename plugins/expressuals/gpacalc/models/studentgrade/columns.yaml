@@ -1,19 +1,19 @@
 columns:
-    user:
+    user_id:
         label: Student
         type: text
         searchable: true
         sortable: true
         select: name
         relation: user
-    course:
+    crs_id:
         label: Course
         type: text
         searchable: true
         sortable: true
         select: course_name
         relation: course
-    grade:
+    grade_id:
         label: Grade
         type: text
         searchable: true

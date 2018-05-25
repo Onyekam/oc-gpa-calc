@@ -1,0 +1,16 @@
+[account]
+==
+{% set courses = Courses.courses %}
+{% set userCourses = Courses.userCourses %}
+<form data-request="onRegisterCourses">
+    <ul>
+        {% for course in courses %}
+            <label class="checkbox" for="{{course.id}}">
+                <input type="checkbox" value="{{course.id}}" name="courses[]" id="{{course.id}}" data-toggle="checkbox" {% if course.course_name in userCourses %}  checked{% endif %}>
+                    {{course.course_name}}
+            </label>
+        {% endfor %}
+    </ul>
+
+    <button type="submit" class="btn btn-primary btn-sm btn-block primary-btns">Register</button>
+</form>

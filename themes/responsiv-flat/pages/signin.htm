@@ -1,5 +1,5 @@
-title = "Sign in"
-url = "/signin"
+title = "Sign-in"
+url = "/"
 layout = "default"
 ==
 <div class="signin-container">
@@ -10,16 +10,18 @@ layout = "default"
                 <div class="signin">
                     <div class="signin-screen">
                         <div class="signin-icon">
-                            <img src="{{ 'assets/images/logo.png'|theme }}" alt="Welcome to Flat App" />
-                            <h4>Welcome to <small>Flat App</small></h4>
+                            {# <img src="{{ 'assets/images/logo.png'|theme }}" alt="Welcome to Flat App" /> #}
+                            <h4>Welcome to <small>GPA Calc</small></h4>
                         </div>
-
+                        <form
+    data-request="onSignin">
                         <div class="signin-form">
                             <div class="form-group">
                                 <input
                                     type="text"
                                     class="form-control signin-field"
                                     value=""
+                                    name="login"
                                     placeholder="Enter your email"
                                     id="signin-email" />
                                 <label class="signin-field-icon fui-mail" for="signin-email"></label>
@@ -30,16 +32,18 @@ layout = "default"
                                     type="password"
                                     class="form-control signin-field"
                                     value=""
+                                    name="password"
                                     placeholder="Password"
                                     id="signin-pass" />
                                 <label class="signin-field-icon fui-lock" for="signin-pass"></label>
                             </div>
 
-                            <a class="btn btn-primary btn-lg btn-block" href="#">Log in</a>
+                            <button type="submit" class="btn btn-primary btn-lg btn-block primary-btns" href="#">Log in</button>
 
-                            <a class="signin-link" href="#">Lost your password?</a>
-                            <a class="signin-link" href="{{ 'samples/register'|page }}">Create an account</a>
+                            {# <a class="signin-link" href="#">Lost your password?</a> #}
+                            <a class="signin-link" href="{{'/register'}}">Create an account</a>
                         </div>
+                        </form>
                     </div>
                 </div>
 

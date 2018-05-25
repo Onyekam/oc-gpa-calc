@@ -11,9 +11,9 @@ class BuilderTableCreateExpressualsGpacalcSemester extends Migration
         {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('title')->nullable();
-            $table->string('level')->nullable();
-            $table->integer('user_id')->nullable();
+            $table->string('title');
+            $table->string('level');
+            $table->string('slug');
         });
     }
     

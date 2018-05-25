@@ -30,7 +30,9 @@ class Grade extends Model
         'users' => [
             'Rainlab\User\Models\User',
             'table' => 'expressuals_gpacalc_grades_users',
-            'order' => 'name' 
+            'order' => 'name',
+            'key' => 'user_id',
+            'other' => 'id'
         ],
         'courses' => [
             'Expressuals\GpaCalc\Models\Course',

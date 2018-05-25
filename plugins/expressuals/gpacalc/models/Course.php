@@ -35,8 +35,8 @@ class Course extends Model
             'Rainlab\User\Models\User',
             'table' => 'expressuals_gpacalc_grades_users',
             'order' => 'name',
-            'key'   => 'crs_id',
-            'other_key' => 'user_id'
+            'key'   => 'user_id',
+            'other_key' => 'id'
 
         ],
         'grades' => [

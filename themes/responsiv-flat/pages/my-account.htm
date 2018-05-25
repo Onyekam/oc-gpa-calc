@@ -1,15 +1,20 @@
-title = "Demonstration"
-url = "/old home"
+title = "Student Account"
+url = "/my-account"
 layout = "default"
-==
+is_hidden = 0
 
+[session]
+[Courses]
+security = "user"
+redirect = "signin"
+==
 <section class="home-title">
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
-                <h3>Flat Theme for OctoberCMS</h3>
-                <p>You have the design, you have the code. We've created the product that will help your startup to look even better.</p>
-                <div class="signup-form">
+                <h3>Hi {{user.name}} {{user.surname}}</h3>
+                <p></p>
+                {# <div class="signup-form">
                     <form>
                         <div class="form-group">
                             <input class="form-control" type="text" placeholder="Your E-mail">
@@ -26,21 +31,21 @@ layout = "default"
                             <button type="submit" class="btn btn-block btn-info">Sign Up</button>
                         </div>
                     </form>
-                </div>
-                <div class="additional-links">
+                </div> #}
+                {# <div class="additional-links">
                     By signing up you agree to <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>
-                </div>
+                </div> #}
             </div>
-            <div class="col-sm-7 col-sm-offset-1 player-wrapper">
+            {# <div class="col-sm-7 col-sm-offset-1 player-wrapper">
                 <div class="player">
                     <iframe src="http://player.vimeo.com/video/29568236?color=3498db" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                 </div>
-            </div>
+            </div> #}
         </div>
     </div>
 </section>
 
-<section class="logos">
+{# <section class="logos">
     <div class="container">
         <div><img src="{{ 'assets/images/logos/mashable.png'|theme }}" alt=""></div>
         <div><img src="{{ 'assets/images/logos/guardian.png'|theme }}" alt=""></div>
@@ -48,7 +53,7 @@ layout = "default"
         <div><img src="{{ 'assets/images/logos/red-bull.png'|theme }}" alt=""></div>
         <div><img src="{{ 'assets/images/logos/ny-times.png'|theme }}" alt=""></div>
     </div>
-</section>
+</section> #}
 
 <br />
 
@@ -57,14 +62,13 @@ layout = "default"
     <!-- Services -->
     <div class="row our-services">
         <div class="col-sm-12">
-            <h4 class="headline"><span>What we do</span></h4>
-            <p>He hasn't got a freckle my mad as a middy. Trent from punchy maccas no dramas shazza got us some ripper. As dry as a bradman flamin lets throw a cut lunch commando.</p>
-
-            {% partial 'services' %}
+            <h4 class="headline"><span>Courses - </span><span style="font-size:14px"><a href="{{'/my-account/register-courses'}}">Register Courses</a><span></h4>
+            <p>Below is a list of courses you are registered to:</p>
+            {% partial 'courses/courses' %}
         </div>
     </div>
 
-    <div class="recent-tweets">
+    {# <div class="recent-tweets">
         <h4 class="headline"><span>Recent tweets</span></h4>
         <div class="tweet">
             <i class="fa fa-twitter"></i>
@@ -80,7 +84,7 @@ layout = "default"
                 <a href="#">2 days ago</a>
             </p>
         </div>
-    </div>
+    </div> #}
 
 </div>
 
