@@ -1,6 +1,16 @@
 title = "Sign-in"
 url = "/"
 layout = "default"
+is_hidden = 0
+
+[account]
+redirect = "my-account"
+paramCode = "code"
+forceSecure = 0
+
+[session]
+security = "guest"
+redirect = "my-account"
 ==
 <div class="signin-container">
     <div class="container">

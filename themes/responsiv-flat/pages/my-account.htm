@@ -13,7 +13,8 @@ redirect = "signin"
         <div class="row">
             <div class="col-sm-4">
                 <h3>Hi {{user.name}} {{user.surname}}</h3>
-                <p></p>
+                {# <a href="{{}}">Log out</a> #}
+                <a data-request="onLogout" data-request-data="redirect: '/'" style="cursor: pointer">Sign out</a>
                 {# <div class="signup-form">
                     <form>
                         <div class="form-group">
