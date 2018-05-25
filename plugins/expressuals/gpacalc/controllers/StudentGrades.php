@@ -11,6 +11,10 @@ class StudentGrades extends Controller
     public $formConfig = 'config_form.yaml';
     public $reorderConfig = 'config_reorder.yaml';
 
+    public $requiredPermissions = [
+        'courses' 
+    ];
+
     public function __construct()
     {
         parent::__construct();
