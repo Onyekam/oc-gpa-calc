@@ -26,6 +26,8 @@ description = "Default layout"
     </head>
     <body class="page-{{ this.page.id }} layout-{{ this.layout.id }}">
         <div>{% flash success %} <p data-control="flash-message" data-interval="5" class="success">{{message}} </p>{% endflash %}</div> 
+        <div>{% flash error %}
+        <p data-control="flash-message" data-interval="5" class="error">{{message}} </p>{% endflash %}</div>
         <!-- Header -->
         {# <header id="layout-header" class="header-navbar">
             <!-- Nav -->

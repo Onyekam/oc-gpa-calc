@@ -41,17 +41,23 @@ class Courses extends ComponentBase {
     }
 
     public function onRegisterCourses(){
-        $selectedCourses = post('courses');
-        $user = Auth::getUser();
-        foreach ($selectedCourses as $selectedCourse) {
-            $studentCourse = new StudentGrade;
-            $studentCourse->grade_id = 1;
-            $studentCourse->user_id = $user['id'];
-            $studentCourse->crs_id = $selectedCourse;
-            $studentCourse->save();
+        if (post('courses')) {
+            $selectedCourses = post('courses');
+            $user = Auth::getUser();
+            foreach ($selectedCourses as $selectedCourse) {
+                $studentCourse = new StudentGrade;
+                $studentCourse->grade_id = 1;
+                $studentCourse->user_id = $user['id'];
+                $studentCourse->crs_id = $selectedCourse;
+                $studentCourse->save();
+            }
+            Flash::success('Courses Successfully registered');
+            return Redirect::to('/my-account');
+        } else {
+            Flash::error('There are no courses to add');
+            return Redirect::to('/my-account');
         }
-        Flash::success('Courses Successfully registered');
-		return Redirect::to('/my-account');
+        
     }
     public $courses;
     public $user;
