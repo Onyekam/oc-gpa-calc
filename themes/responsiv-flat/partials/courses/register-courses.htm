@@ -6,7 +6,7 @@
     <ul>
         {% for course in courses %}
             <label class="checkbox" for="{{course.id}}">
-                <input type="checkbox" value="{{course.id}}" name="courses[]" id="{{course.id}}" data-toggle="checkbox" {% if course.course_name in userCourses %}  checked{% endif %}>
+                <input type="checkbox" value="{{course.id}}" name="courses[]" id="{{course.id}}" data-toggle="checkbox" {% if course.course_name in userCourses %}  checked disabled {% endif %}>
                     {{course.course_name}}
             </label>
         {% endfor %}

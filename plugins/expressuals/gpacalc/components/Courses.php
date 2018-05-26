@@ -43,8 +43,6 @@ class Courses extends ComponentBase {
     public function onRegisterCourses(){
         $selectedCourses = post('courses');
         $user = Auth::getUser();
-
-        dd($user->courses);
         foreach ($selectedCourses as $selectedCourse) {
             $studentCourse = new StudentGrade;
             $studentCourse->grade_id = 1;
@@ -53,10 +51,8 @@ class Courses extends ComponentBase {
             $studentCourse->save();
         }
         Flash::success('Courses Successfully registered');
-		$this->sendNewJobEmail(Input::post('title'));
 		return Redirect::to('/my-account');
     }
-
     public $courses;
     public $user;
     public $userCourses = [];
