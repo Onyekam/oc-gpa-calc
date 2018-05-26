@@ -1,9 +1,25 @@
 [account]
 ==
 {% set courses = Courses.courses %}
+{% set grades = Courses.grades %}
 
-<ul>
-    {% for course in user.courses %}
-        <li>{{course.course_name}} | {{course.course_hours}} credit hours <a href="" data-request="onRemoveCourse" data-request-data="course: '{{course.id}}', grade: '{{course.grades[0].id}}'">Remove Course</a></li> 
-    {% endfor %}
-</ul>
+    <ul>
+        {% for course in user.courses %}
+            <li>
+            <form data-request="onGradeUpdate" data-request-data="course: '{{course.id}}', grade: '{{course.grades[0].id}}'">
+                <a href="" data-request="onRemoveCourse" data-request-data="course: '{{course.id}}', grade: '{{course.grades[0].id}}'">
+                    Remove Course
+                </a> 
+            | {{course.course_name}} | {{course.course_hours}} credit hours - Grade: 
+                <select id="grade" name="new_grade">
+                    {% for grade in grades %}
+                        <option value="{{grade.id}}" {% if course.grades[0].id == grade.id %} selected {% endif %}>
+                            {{grade.letter_grade}}
+                        </option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-primary btn-sm primary-btns" style="cursor: pointer">Update Grade</button>
+            </form>
+            </li> 
+        {% endfor %}
+    </ul>

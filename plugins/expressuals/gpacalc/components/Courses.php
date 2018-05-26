@@ -3,6 +3,7 @@
 use Cms\Classes\ComponentBase;
 use Illuminate\Support\Facades\Input;
 use Expressuals\GpaCalc\Models\Course;
+use Expressuals\GpaCalc\Models\Grade;
 use Expressuals\GpaCalc\Models\StudentGrade;
 use Illuminate\Support\Facades\DB;
 
@@ -27,6 +28,7 @@ class Courses extends ComponentBase {
             array_push($this->userCourses, $course->course_name);
         }
         $this->courses = $this->getCourses();
+        $this->grades = $this->getGrades();
     }
 
     public function getCourses(){
@@ -34,9 +36,16 @@ class Courses extends ComponentBase {
         return $courses;
     }
 
+    public function getGrades(){
+        $grades = Grade::all();
+        return $grades;
+    }
+
     public function onRemoveCourse(){
         $user = Auth::getUser();
-        DB::delete('delete from expressuals_gpacalc_grades_users where crs_id = '.post('course'). ' and user_id = '. $user->id . ' and grade_id = '.post('grade'));
+        DB::delete(' delete from expressuals_gpacalc_grades_users where crs_id = '.post('course'). ' and user_id = '. $user->id . ' and grade_id = '.post('grade'));
+        Flash::success('Course successfully deleted');
+        return Redirect::refresh();
         // $removeCourse = StudentGrade::where('crs_id', post('course'))->where('user_id',$user->id)->first();
     }
 
@@ -51,7 +60,7 @@ class Courses extends ComponentBase {
                 $studentCourse->crs_id = $selectedCourse;
                 $studentCourse->save();
             }
-            Flash::success('Courses Successfully registered');
+            Flash::success('Course(s) successfully registered');
             return Redirect::to('/my-account');
         } else {
             Flash::error('There are no courses to add');
@@ -59,9 +68,18 @@ class Courses extends ComponentBase {
         }
         
     }
+
+    public function onGradeUpdate(){
+        $user = Auth::getUser();
+        DB::statement('update expressuals_gpacalc_grades_users SET expressuals_gpacalc_grades_users.grade_id = ' .post('new_grade'). ' where expressuals_gpacalc_grades_users.crs_id = ' .post('course'). ' and expressuals_gpacalc_grades_users.user_id = ' .$user->id. ' and expressuals_gpacalc_grades_users.grade_id = ' .post('grade'));
+        Flash::success('Course grade successfully updated');
+        return Redirect::refresh();
+    }
+
     public $courses;
     public $user;
     public $userCourses = [];
+    public $grades;
 }
 
 

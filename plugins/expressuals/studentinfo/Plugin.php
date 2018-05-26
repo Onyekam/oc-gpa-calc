@@ -32,7 +32,8 @@ class Plugin extends PluginBase
                 'Expressuals\GpaCalc\Models\Course',
                 'table' => 'expressuals_gpacalc_grades_users',
                 'key' =>'user_id',
-                'otherKey' => 'crs_id'
+                'otherKey' => 'crs_id',
+                'order' => 'course_name'
             ];
 
             $model->belongsToMany['grades'] = [ 
