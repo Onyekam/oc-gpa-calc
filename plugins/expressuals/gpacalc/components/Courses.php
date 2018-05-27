@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Input;
 use Expressuals\GpaCalc\Models\Course;
 use Expressuals\GpaCalc\Models\Grade;
 use Expressuals\GpaCalc\Models\StudentGrade;
+use Rainlab\User\Models\User;
 use Illuminate\Support\Facades\DB;
 
 use Redirect;
@@ -29,6 +30,7 @@ class Courses extends ComponentBase {
         }
         $this->courses = $this->getCourses();
         $this->grades = $this->getGrades();
+        $this->expectedClass();
     }
 
     public function getCourses(){
@@ -72,14 +74,55 @@ class Courses extends ComponentBase {
     public function onGradeUpdate(){
         $user = Auth::getUser();
         DB::statement('update expressuals_gpacalc_grades_users SET expressuals_gpacalc_grades_users.grade_id = ' .post('new_grade'). ' where expressuals_gpacalc_grades_users.crs_id = ' .post('course'). ' and expressuals_gpacalc_grades_users.user_id = ' .$user->id. ' and expressuals_gpacalc_grades_users.grade_id = ' .post('grade'));
+        $this->onCalculateGPA();
         Flash::success('Course grade successfully updated');
         return Redirect::refresh();
+    }
+
+    public function onCalculateGPA(){
+        $user = Auth::getUser();
+        $gradePointSum = 0;
+        $creditSum = 0;
+        foreach ($user->courses as $value) {
+            $gradePointSum += $value->grades[0]->grade_point * $value->course_hours;
+            if ($value->semester->level == 300 || $value->semester->level == 400) {
+                $creditSum += $value->course_hours * 2;
+            } else {
+                $creditSum += $value->course_hours;
+            }
+        }
+        $this->fcgpa = round($gradePointSum / $creditSum,2);
+        $updateStudentGpa = User::find($user->id);
+        $updateStudentGpa->gpa = $this->fcgpa;
+        $updateStudentGpa->save();
+        
+        
+        // return $this->fcgpa;
+    }
+
+    public function expectedClass() {
+        $user = Auth::getUser();
+        if ($user->gpa <= 4 && $user->gpa > 3.6) {
+            $this->expectedClass = "You are in the range of a First Class";
+        } elseif ($user->gpa < 3.6 && $user->gpa >= 3.0) {
+            $this->expectedClass = "You are in the range of a Second Class Upper Division";
+        } elseif ($user->gpa < 3.0 && $user->gpa >= 2.0) {
+            $this->expectedClass = "You are in the range of a Second Class Lower Division";
+        } elseif ($user->gpa < 2.0 && $user->gpa >= 1.5) {
+            $this->expectedClass = "You are in the range of a Third Class";
+        } elseif ($user->gpa < 1.5 && $user->gpa >= 1.0) {
+            $this->expectedClass = "You are in the range of a Pass";
+        } else {
+            $this->expectedClass = "You are Failing";
+        }
     }
 
     public $courses;
     public $user;
     public $userCourses = [];
     public $grades;
+    public $fcgpa;
+    public $expectedClass;
 }
 
 

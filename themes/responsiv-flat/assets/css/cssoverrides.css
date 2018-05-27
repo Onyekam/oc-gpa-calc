@@ -8,3 +8,13 @@
 .primary-btns {
     background: #000078 !important;
 }
+
+.white-btn {
+    background: #fff !important;
+    color: #354960;
+
+}
+
+.player{
+    padding-top: 80px;
+}

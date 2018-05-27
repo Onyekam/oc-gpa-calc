@@ -8,6 +8,7 @@ is_hidden = 0
 security = "user"
 redirect = "signin"
 ==
+{% set expectedClass = Courses.expectedClass %}
 <section class="home-title">
     <div class="container">
         <div class="row">
@@ -37,11 +38,25 @@ redirect = "signin"
                     By signing up you agree to <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>
                 </div> #}
             </div>
-            {# <div class="col-sm-7 col-sm-offset-1 player-wrapper">
-                <div class="player">
-                    <iframe src="http://player.vimeo.com/video/29568236?color=3498db" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+            <div class="col-sm-7 col-sm-offset-1 player-wrapper">
+                <div class="player" style="margin: 0 auto; text-align:center; color: #fff; vertical-align:middle">
+                    <h3 style="color: #fff !important">CURRENT GPA</h3>
+                    <div id="gpa">
+                        {% if user.gpa != null %}
+                            <h1>{{user.gpa}}</h1>
+                        {% else %}
+                            <h1>N/A</h1>
+                        {% endif %}
+                        <h6 style="color: #fff; font-weight:100">{{expectedClass}}</h6>
+                    </div>
+                    {# <iframe src="http://player.vimeo.com/video/29568236?color=3498db" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> #}
+                    {# {% if user.gpa != null %}
+                        <button data-request="onCalculateGPA" data-request-update="'courses/gpa': '#gpa'" class="btn btn-primary btn-sm white-btn">UPDATE GPA</button>
+                    {% else %}
+                        <button data-request="onCalculateGPA" data-request-update="'courses/gpa': '#gpa'" class="btn btn-primary btn-sm white-btn" >CALCULATE GPA</button>
+                    {% endif %} #}
                 </div>
-            </div> #}
+            </div>
         </div>
     </div>
 </section>
