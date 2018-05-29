@@ -79,7 +79,7 @@ class Courses extends ComponentBase {
         return Redirect::refresh();
     }
 
-    public function onCalculateGPA(){
+    public function onCalculateGPAback(){
         $user = Auth::getUser();
         $gradePointSum = 0;
         $creditSum = 0;
@@ -100,7 +100,7 @@ class Courses extends ComponentBase {
         // return $this->fcgpa;
     }
 
-    public function onCalculateGPA2(){
+    public function onCalculateGPA(){
         $user = Auth::getUser();
         $gradePointSum = 0;
         $creditSum = 0;
