@@ -6,7 +6,7 @@
     <ul>
         {% for course in user.courses %}
             <li>
-            <form id="gradeUpdate" data-request="onGradeUpdate" data-request-data="course: '{{course.id}}', grade: '{{course.grades[0].id}}'">
+            <form id="gradeUpdate" class="gradeUpdate" data-request="onGradeUpdate" data-request-data="course: '{{course.id}}', grade: '{{course.grades[0].id}}'">
                 <a href="" data-request="onRemoveCourse" data-request-data="course: '{{course.id}}', grade: '{{course.grades[0].id}}'">
                     Remove Course
                 </a> 

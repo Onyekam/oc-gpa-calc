@@ -1,5 +1,5 @@
 (function ($) {
-    $('#gradeUpdate').on('change', 'select', function () {
+    $('.gradeUpdate').on('change', 'select', function () {
         var $form = $(this).closest('form');
         $form.request();
     });

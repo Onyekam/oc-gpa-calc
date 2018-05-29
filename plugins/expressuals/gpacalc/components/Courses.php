@@ -100,6 +100,66 @@ class Courses extends ComponentBase {
         // return $this->fcgpa;
     }
 
+    public function onCalculateGPA2(){
+        $user = Auth::getUser();
+        $gradePointSum = 0;
+        $creditSum = 0;
+        $lvl100grades = [];
+        $lvl200grades = [];
+        $lvl300grades = [];
+        $lvl400grades = [];
+        $lvl100gpa;
+        $lvl200gpa;
+        $lvl300gpa;
+        $lvl400gpa;
+        $gpasArray = [];
+        foreach ($user->courses as $value) {
+            if ($value->semester->level == 100 ) {
+                //$gradePointSum += $value->grades[0]->grade_point * $value->course_hours;
+                array_push($lvl100grades, $value->grades[0]->grade_point);
+               
+            } elseif ($value->semester->level == 200) {
+                array_push($lvl200grades, $value->grades[0]->grade_point);
+                
+            } elseif ($value->semester->level == 300) {
+                array_push($lvl300grades, $value->grades[0]->grade_point);
+                
+            } elseif ($value->semester->level == 400) {
+                array_push($lvl400grades, $value->grades[0]->grade_point);
+                
+            } 
+        }
+        if (!empty($lvl100grades)) {
+            $lvl100gpa = array_sum($lvl100grades) / $this->handleDivideByZero(count($lvl100grades));
+            array_push($gpasArray, $lvl100gpa);
+        } elseif (!empty($lvl200grades)) {
+            $lvl200gpa = array_sum($lvl200grades) / $this->handleDivideByZero(count($lvl200grades));
+            array_push($gpasArray, $lvl200gpa);
+        } elseif (!empty($lvl300grades)) {
+            $lvl300gpa = array_sum($lvl300grades) / $this->handleDivideByZero(count($lvl300grades));
+            array_push($gpasArray, $lvl300gpa);
+        } elseif (!empty($lvl400grades)) {
+            $lvl400gpa = array_sum($lvl400grades) / $this->handleDivideByZero(count($lvl400grades));
+            array_push($gpasArray, $lvl400gpa);
+        }
+        $this->fcgpa = array_sum($gpasArray) / count($gpasArray);
+        //$this->fcgpa = round($gradePointSum / $creditSum,2);
+        $updateStudentGpa = User::find($user->id);
+        $updateStudentGpa->gpa = $this->fcgpa;
+        $updateStudentGpa->save();
+        
+        
+        // return $this->fcgpa;
+    }
+
+    public function handleDivideByZero($number) {
+        if ($number == 0) {
+            return 1;
+        } else {
+            return $number;
+        }
+    }
+
     public function expectedClass() {
         $user = Auth::getUser();
         if ($user->gpa <= 4 && $user->gpa > 3.6) {
