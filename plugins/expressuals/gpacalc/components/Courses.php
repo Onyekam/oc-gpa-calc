@@ -162,7 +162,7 @@ class Courses extends ComponentBase {
 
     public function expectedClass() {
         $user = Auth::getUser();
-        if ($user->gpa <= 4 && $user->gpa > 3.6) {
+        if ($user->gpa <= 4 && $user->gpa >= 3.6) {
             $this->expectedClass = "You are in the range of a First Class";
         } elseif ($user->gpa < 3.6 && $user->gpa >= 3.0) {
             $this->expectedClass = "You are in the range of a Second Class Upper Division";
