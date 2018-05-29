@@ -33,7 +33,7 @@ class Plugin extends PluginBase
                 'table' => 'expressuals_gpacalc_grades_users',
                 'key' =>'user_id',
                 'otherKey' => 'crs_id',
-                'order' => 'semester_id'
+                'order' => 'course_name'
             ];
 
             $model->belongsToMany['grades'] = [ 
