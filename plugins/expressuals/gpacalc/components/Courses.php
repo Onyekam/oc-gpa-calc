@@ -79,6 +79,19 @@ class Courses extends ComponentBase {
         return Redirect::refresh();
     }
 
+    public function onGradeUpdate2(){
+        $user = Auth::getUser();
+        $courses = post('course');
+        $newGrades = post('new_grade');
+        $grades = post('grade');
+        for ($i=0; $i < count($courses); $i++) { 
+            DB::statement('update expressuals_gpacalc_grades_users SET expressuals_gpacalc_grades_users.grade_id = ' .$newGrades[$i]. ' where expressuals_gpacalc_grades_users.crs_id = ' .$courses[$i]. ' and expressuals_gpacalc_grades_users.user_id = ' .$user->id. ' and expressuals_gpacalc_grades_users.grade_id = ' .$grades[$i]);
+        }
+        $this->onCalculateGPA();
+        Flash::success('Course grade successfully updated');
+        return Redirect::refresh();
+    }
+
     public function onCalculateGPAback(){
         $user = Auth::getUser();
         $gradePointSum = 0;
