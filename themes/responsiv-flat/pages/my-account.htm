@@ -9,6 +9,7 @@ security = "user"
 redirect = "signin"
 ==
 {% set expectedClass = Courses.expectedClass %}
+{% set estimatedMessage = Courses.estimatedMessage %}
 <section class="home-title">
     <div class="container">
         <div class="row">
@@ -48,6 +49,7 @@ redirect = "signin"
                             <h1>N/A</h1>
                         {% endif %}
                         <h6 style="color: #fff; font-weight:100">{{expectedClass}}</h6>
+                        <h6 style="color: #fff; font-weight:100">{{estimatedMessage}}</h6>
                     </div>
                     {# <iframe src="http://player.vimeo.com/video/29568236?color=3498db" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> #}
                     {# {% if user.gpa != null %}

@@ -31,6 +31,7 @@ class Courses extends ComponentBase {
         $this->courses = $this->getCourses();
         $this->grades = $this->getGrades();
         $this->expectedClass();
+        $this->onEstimateMarksForNextGrade();
     }
 
     public function getCourses(){
@@ -165,6 +166,78 @@ class Courses extends ComponentBase {
         // return $this->fcgpa;
     }
 
+    public function onEstimateMarksForNextGrade() {
+        $firstClassMin = 80;
+        $secondClassUpperMin = 75;
+        $secondClassLowerMin = 60;
+        $thirdClassMin = 55;
+        $passMin = 50;
+        $totalNumOfCourses = 40; 
+        $user = Auth::getUser();
+        $currentNumOfCourses = count($user->courses);
+        $currentGPA = $user->gpa;
+        $totalMarks = 0;
+        $desiredMark = 80;
+
+
+        foreach ($user->courses as $value) {
+            if ($value->grades[0]->letter_grade == 'A') {
+                $totalMarks += 80;
+            } elseif ($value->grades[0]->letter_grade == 'B+') {
+               $totalMarks += 75;
+            } elseif ($value->grades[0]->letter_grade == 'B') {
+                $totalMarks += 70;
+            } elseif ($value->grades[0]->letter_grade == 'C+') {
+                $totalMarks += 65;
+            } elseif ($value->grades[0]->letter_grade == 'C') {
+                $totalMarks += 60;
+            } elseif ($value->grades[0]->letter_grade == 'D+') {
+                $totalMarks += 55;
+            } elseif ($value->grades[0]->letter_grade == 'D') {
+                $totalMarks += 50;
+            } elseif ($value->grades[0]->letter_grade == 'F') {
+                $totalMarks += 0;
+            } else {
+                $totalMarks += 0;
+            }
+        
+        }
+
+        if ($user->gpa <= 4 && $user->gpa >= 3.6) {
+            //$this->expectedClass = "You are in the range of a First Class";
+        } elseif ($user->gpa < 3.6 && $user->gpa >= 3.0) {
+            $this->expectedClass = "You are in the range of a Second Class Upper Division";
+            $desiredMark = $firstClassMin;
+        } elseif ($user->gpa < 3.0 && $user->gpa >= 2.0) {
+            //$this->expectedClass = "You are in the range of a Second Class Lower Division";
+            $desiredMark = $secondClassUpperMin;
+        } elseif ($user->gpa < 2.0 && $user->gpa >= 1.5) {
+            //$this->expectedClass = "You are in the range of a Third Class";
+            $desiredMark = $secondClassLowerMin;
+        } elseif ($user->gpa < 1.5 && $user->gpa >= 1.0) {
+            //$this->expectedClass = "You are in the range of a Pass";
+            $desiredMark = $thirdClassUpperMin;
+        } else {
+            //$this->expectedClass = "You are Failing";
+            $desiredMark = $passMin;
+        }
+
+        if ($currentNumOfCourses < $totalNumOfCourses) {
+            if ($user->gpa >= 3.6) {
+                $this->estimatedMessage = "Maintain your current marks and grades for a First class";
+            } else {
+                $estimatedMark = ($desiredMark * ($currentNumOfCourses + 1)) - $totalMarks;
+                $this->estimatedMessage = "To get to your next class you need to get at least". $estimatedMark . " marks on your next course";
+            }
+            
+        } else {
+           $this->estimatedMessage = "You've taken the required number of courses";
+        }
+        
+
+        
+    }
+
     public function handleDivideByZero($number) {
         if ($number == 0) {
             return 1;
@@ -196,6 +269,7 @@ class Courses extends ComponentBase {
     public $grades;
     public $fcgpa;
     public $expectedClass;
+    public $estimatedMessage;
 }
 
 
