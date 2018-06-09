@@ -127,6 +127,47 @@ class Courses extends ComponentBase {
         $lvl300gpa;
         $lvl400gpa;
         $gpasArray = [];
+        $grades = [];
+        foreach ($user->courses as $value) {
+                //$gradePointSum += $value->grades[0]->grade_point * $value->course_hours;
+                array_push($grades, $value->grades[0]->grade_point);
+        }
+        // if (!empty($lvl100grades) && count($lvl100grades) != 0) {
+        //     $lvl100gpa = array_sum($lvl100grades) / count($lvl100grades);
+        //     array_push($gpasArray, $lvl100gpa);
+        // } elseif (!empty($lvl200grades) && count($lvl200grades) != 0 ) {
+        //     $lvl200gpa = array_sum($lvl200grades) / count($lvl200grades);
+        //     array_push($gpasArray, $lvl200gpa);
+        // } elseif (!empty($lvl300grades) && count($lvl300grades) != 0 ) {
+        //     $lvl300gpa = array_sum($lvl300grades) / count($lvl300grades);
+        //     array_push($gpasArray, $lvl300gpa);
+        // } elseif (!empty($lvl400grades) && count($lvl400grades) != 0 ) {
+        //     $lvl400gpa = array_sum($lvl400grades) / count($lvl400grades);
+        //     array_push($gpasArray, $lvl400gpa);
+        // }
+        $this->fcgpa = round(array_sum($grades) / count($grades),2);
+        //$this->fcgpa = round($gradePointSum / $creditSum,2);
+        $updateStudentGpa = User::find($user->id);
+        $updateStudentGpa->gpa = $this->fcgpa;
+        $updateStudentGpa->save();
+        
+        
+        // return $this->fcgpa;
+    }
+
+    public function onCalculateGPA2(){
+        $user = Auth::getUser();
+        $gradePointSum = 0;
+        $creditSum = 0;
+        $lvl100grades = [];
+        $lvl200grades = [];
+        $lvl300grades = [];
+        $lvl400grades = [];
+        $lvl100gpa;
+        $lvl200gpa;
+        $lvl300gpa;
+        $lvl400gpa;
+        $gpasArray = [];
         foreach ($user->courses as $value) {
             if ($value->semester->level == 100 ) {
                 //$gradePointSum += $value->grades[0]->grade_point * $value->course_hours;
@@ -143,17 +184,17 @@ class Courses extends ComponentBase {
                 
             } 
         }
-        if (!empty($lvl100grades)) {
-            $lvl100gpa = array_sum($lvl100grades) / $this->handleDivideByZero(count($lvl100grades));
+        if (!empty($lvl100grades) && count($lvl100grades) != 0) {
+            $lvl100gpa = array_sum($lvl100grades) / count($lvl100grades);
             array_push($gpasArray, $lvl100gpa);
-        } elseif (!empty($lvl200grades)) {
-            $lvl200gpa = array_sum($lvl200grades) / $this->handleDivideByZero(count($lvl200grades));
+        } elseif (!empty($lvl200grades) && count($lvl200grades) != 0 ) {
+            $lvl200gpa = array_sum($lvl200grades) / count($lvl200grades);
             array_push($gpasArray, $lvl200gpa);
-        } elseif (!empty($lvl300grades)) {
-            $lvl300gpa = array_sum($lvl300grades) / $this->handleDivideByZero(count($lvl300grades));
+        } elseif (!empty($lvl300grades) && count($lvl300grades) != 0 ) {
+            $lvl300gpa = array_sum($lvl300grades) / count($lvl300grades);
             array_push($gpasArray, $lvl300gpa);
-        } elseif (!empty($lvl400grades)) {
-            $lvl400gpa = array_sum($lvl400grades) / $this->handleDivideByZero(count($lvl400grades));
+        } elseif (!empty($lvl400grades) && count($lvl400grades) != 0 ) {
+            $lvl400gpa = array_sum($lvl400grades) / count($lvl400grades);
             array_push($gpasArray, $lvl400gpa);
         }
         $this->fcgpa = array_sum($gpasArray) / count($gpasArray);
@@ -227,7 +268,7 @@ class Courses extends ComponentBase {
                 $this->estimatedMessage = "Maintain your current marks and grades for a First class";
             } else {
                 $estimatedMark = ($desiredMark * ($currentNumOfCourses + 1)) - $totalMarks;
-                $this->estimatedMessage = "To get to your next class you need to get at least". $estimatedMark . " marks on your next course";
+                $this->estimatedMessage = "To get to your next class you need to get at least ". $estimatedMark . " marks.";
             }
             
         } else {
