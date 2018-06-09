@@ -213,7 +213,7 @@ class Courses extends ComponentBase {
         $secondClassLowerMin = 60;
         $thirdClassMin = 55;
         $passMin = 50;
-        $totalNumOfCourses = 40; 
+        $totalNumOfCourses = 44; 
         $user = Auth::getUser();
         $currentNumOfCourses = count($user->courses);
         $currentGPA = $user->gpa;
