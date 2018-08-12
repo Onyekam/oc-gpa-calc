@@ -53,7 +53,7 @@ class Plugin extends PluginBase
             // ];
 
 
-            $model->hasOne['passwords'] = [
+            $model->hasOne['password'] = [
                 'Expressuals\Gpacalc\Models\Password'
             ];
         });

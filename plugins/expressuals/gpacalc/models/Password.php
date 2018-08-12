@@ -27,6 +27,6 @@ class Password extends Model
     public $table = 'expressuals_gpacalc_passwords';
 
     public $belongsTo = [
-        'user' => 'Rainlab\User\Models\User'
+        'user' => ['Rainlab\User\Models\User']
     ];
 }

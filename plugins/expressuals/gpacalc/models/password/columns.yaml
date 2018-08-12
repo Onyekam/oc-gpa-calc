@@ -3,7 +3,7 @@ columns:
         label: User
         type: text
         searchable: true
-        select: name
+        select: email
         relation: user
     password:
         label: Password
