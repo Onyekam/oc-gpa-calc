@@ -1,3 +1,6 @@
 1.0.1:
     - Initialize plugin.
     - add_new_fields.php
+1.0.2:
+    - Adds Index Number.
+    - add_index.php

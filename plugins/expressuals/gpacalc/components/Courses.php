@@ -7,7 +7,6 @@ use Expressuals\GpaCalc\Models\Grade;
 use Expressuals\GpaCalc\Models\StudentGrade;
 use Rainlab\User\Models\User;
 use Illuminate\Support\Facades\DB;
-
 use Redirect;
 use Session;
 use Response;
@@ -32,11 +31,37 @@ class Courses extends ComponentBase {
         $this->grades = $this->getGrades();
         $this->expectedClass();
         $this->onEstimateMarksForNextGrade();
+        $this->getLvlCourses();
     }
 
     public function getCourses(){
         $courses = Course::all();
         return $courses;
+    }
+
+    public function getLvlCourses(){
+        $user = Auth::getUser();
+        //dd($user->courses);
+        
+        $this->studentCourses = StudentGrade::where('user_id', $user->id)->get();
+        foreach ($this->studentCourses as $course) {
+            //dd($course->course->semester['level']);
+            if ($course->course->semester['level'] == '100') {
+                array_push($this->lvl100Courses, $course );
+            } elseif ($course->course->semester['level'] == '200') {
+               array_push($this->lvl200Courses, $course );
+            } elseif ($course->course->semester['level'] == '300') {
+                array_push($this->lvl300Courses, $course );
+            } elseif ($course->course->semester['level'] == '400') {
+                array_push($this->lvl400Courses, $course );
+            }
+
+        }
+        //dd($this->lvl100Courses);
+        // $this->lvl100Courses = Course::where('semester_id','<',3)->get();
+        // $this->lvl200Courses = Course::where('semester_id',3)->orWhere('semester_id',4)->get();
+        // $this->lvl300Courses = Course::where('semester_id',5)->orWhere('semester_id',6)->get();
+        // $this->lvl400Courses = Course::where('semester_id',7)->orWhere('semester_id',8)->get();
     }
 
     public function getGrades(){
@@ -88,7 +113,11 @@ class Courses extends ComponentBase {
         for ($i=0; $i < count($courses); $i++) { 
             DB::statement('update expressuals_gpacalc_grades_users SET expressuals_gpacalc_grades_users.grade_id = ' .$newGrades[$i]. ' where expressuals_gpacalc_grades_users.crs_id = ' .$courses[$i]. ' and expressuals_gpacalc_grades_users.user_id = ' .$user->id. ' and expressuals_gpacalc_grades_users.grade_id = ' .$grades[$i]);
         }
+        //echo "I am here";
+        // return 'I am here';
         $this->onCalculateGPA();
+        //echo 'I am here';
+        //return 'I am here';
         Flash::success('Course grade successfully updated');
         return Redirect::refresh();
     }
@@ -115,7 +144,9 @@ class Courses extends ComponentBase {
     }
 
     public function onCalculateGPA(){
+       
         $user = Auth::getUser();
+        
         $gradePointSum = 0;
         $creditSum = 0;
         $lvl100grades = [];
@@ -128,9 +159,12 @@ class Courses extends ComponentBase {
         $lvl400gpa;
         $gpasArray = [];
         $grades = [];
-        foreach ($user->courses as $value) {
+        //echo 'I am here';
+        $studentCourses = StudentGrade::where('user_id', $user->id)->get();
+        foreach ($studentCourses as $value) {
+            
                 //$gradePointSum += $value->grades[0]->grade_point * $value->course_hours;
-                array_push($grades, $value->grades[0]->grade_point);
+                array_push($grades, $value->grade->grade_point);
         }
         // if (!empty($lvl100grades) && count($lvl100grades) != 0) {
         //     $lvl100gpa = array_sum($lvl100grades) / count($lvl100grades);
@@ -145,12 +179,16 @@ class Courses extends ComponentBase {
         //     $lvl400gpa = array_sum($lvl400grades) / count($lvl400grades);
         //     array_push($gpasArray, $lvl400gpa);
         // }
-        $this->fcgpa = round(array_sum($grades) / count($grades),2);
-        //$this->fcgpa = round($gradePointSum / $creditSum,2);
-        $updateStudentGpa = User::find($user->id);
-        $updateStudentGpa->gpa = $this->fcgpa;
-        $updateStudentGpa->save();
         
+        $this->fcgpa = round(array_sum($grades) / count($grades),2);
+        
+        //$this->fcgpa = round($gradePointSum / $creditSum,2);
+        $updateStudentGpa = User::where('id', $user->id)->first();
+        
+        $updateStudentGpa->gpa = $this->fcgpa;
+        
+        $updateStudentGpa->save();
+        //echo 'I am here';
         
         // return $this->fcgpa;
     }
@@ -311,6 +349,11 @@ class Courses extends ComponentBase {
     public $fcgpa;
     public $expectedClass;
     public $estimatedMessage;
+    public $lvl100Courses = [];
+    public $lvl200Courses = [];
+    public $lvl300Courses = [];
+    public $lvl400Courses = [];
+    public $studentCourses;
 }
 
 

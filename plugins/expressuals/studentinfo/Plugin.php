@@ -20,7 +20,12 @@ class Plugin extends PluginBase
             $model->addFillable([
                 'student_id',
                 'semester',
-                'gpa'
+                'gpa',
+                'index',
+                'username',
+                'password',
+                'password_confirmation',
+                'id'
             ]);
 
             $model->hasManyThrough['semesters'] = [
@@ -43,7 +48,14 @@ class Plugin extends PluginBase
                 'otherKey' => 'grade_id'
             ];
 
+            // $model->hasMany['courses'] = [ 
+            //     'Expressuals\GpaCalc\Models\Course',
+            // ];
 
+
+            $model->hasOne['passwords'] = [
+                'Expressuals\Gpacalc\Models\Password'
+            ];
         });
 
         UsersController::extendFormFields(function($form, $model, $context){
@@ -62,8 +74,21 @@ class Plugin extends PluginBase
     				'label' => 'GPA',
     				'type' => 'text',
     				'tab' => 'Extra Details'
+                ],
+                'index' => [
+    				'label' => 'Index Number',
+    				'type' => 'text',
+    				'tab' => 'Extra Details'
                 ]
             ]);
+        });
+
+        UserModel::extend(function($model) {
+            $model->bindEvent('model.beforeValidate', function() use ($model) {
+                $model->rules['username'] = 'required|between:4,255';
+                $model->rules['password'] = 'between:4,255';
+                $model->rules['password_confirmation'] = 'between:4,255';
+            });
         });
     }
 }

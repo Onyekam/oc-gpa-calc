@@ -1,0 +1,10 @@
+columns:
+    user_id:
+        label: User
+        type: text
+        searchable: true
+        select: name
+        relation: user
+    password:
+        label: Password
+        type: text

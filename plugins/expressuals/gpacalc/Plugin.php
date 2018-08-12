@@ -8,6 +8,7 @@ class Plugin extends PluginBase
     {
         return [
             'Expressuals\GpaCalc\Components\Courses' => 'Courses',
+            'Expressuals\GpaCalc\Components\Newaccount' => 'NewAccount',
         ];
         
     }

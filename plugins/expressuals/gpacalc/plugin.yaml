@@ -22,6 +22,15 @@ navigation:
         label: Courses
         url: expressuals/gpacalc/courses
         icon: icon-life-ring
+    main-menu-item4:
+        label: 'User Passwords'
+        url: expressuals/gpacalc/password
+        icon: icon-life-ring
+        sideMenu:
+            side-menu-item:
+                label: 'User Password'
+                url: expressuals/gpacalc/password
+                icon: icon-sitemap
 permissions:
     courses:
         tab: Courses

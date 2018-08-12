@@ -1,0 +1,10 @@
+name: Password
+form: $/expressuals/gpacalc/models/password/fields.yaml
+modelClass: Expressuals\GpaCalc\Models\Password
+defaultRedirect: expressuals/gpacalc/password
+create:
+    redirect: 'expressuals/gpacalc/password/update/:id'
+    redirectClose: expressuals/gpacalc/password
+update:
+    redirect: expressuals/gpacalc/password
+    redirectClose: expressuals/gpacalc/password

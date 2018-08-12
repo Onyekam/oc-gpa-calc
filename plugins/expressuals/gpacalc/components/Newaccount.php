@@ -1,4 +1,4 @@
-<?php namespace RainLab\User\Components;
+<?php namespace Expressuals\Gpacalc\Components;
 
 use Lang;
 use Auth;
@@ -15,7 +15,11 @@ use Cms\Classes\Page;
 use Cms\Classes\ComponentBase;
 use RainLab\User\Models\Settings as UserSettings;
 use Exception;
-
+use Expressuals\Gpacalc\Models\Password;
+use Expressuals\Gpacalc\Models\StudentGrade;
+use Expressuals\Gpacalc\Models\Course;
+use Rainlab\User\Models\User;
+use Str;
 
 /**
  * Account component
@@ -23,7 +27,7 @@ use Exception;
  * Allows users to register, sign in and update their account. They can also
  * deactivate their account and resend the account verification email.
  */
-class Account extends ComponentBase
+class Newaccount extends ComponentBase
 {
     public function componentDetails()
     {
@@ -217,8 +221,9 @@ class Account extends ComponentBase
     /**
      * Register the user
      */
-    public function onRegister()
+    public function onNewRegister()
     {
+        $password = '';
         try {
             if (!$this->canRegister()) {
                 throw new ApplicationException(Lang::get(/*Registrations are currently disabled.*/'rainlab.user::lang.account.registration_disabled'));
@@ -228,13 +233,22 @@ class Account extends ComponentBase
              * Validate input
              */
             $data = post();
-
+            $data['username'] = $data['index'];
+            $password = $this->generatePassword();
             if (!array_key_exists('password_confirmation', $data)) {
-                $data['password_confirmation'] = post('password');
+                //$data['password_confirmation'] = post('password');
+                
+                //return $password;
+                $data['password'] = $password;
+                $data['password_confirmation'] = $password;
+                
             }
+            $data['password'] = $password;
 
+            //return $data;
             $rules = [
                 'email'    => 'required|email|between:6,255',
+                'index'    => 'required|between:6,20',
                 'password' => 'required|between:4,255|confirmed'
             ];
 
@@ -245,19 +259,41 @@ class Account extends ComponentBase
             $validation = Validator::make($data, $rules);
             if ($validation->fails()) {
                 throw new ValidationException($validation);
-            }
+            } 
 
             /*
              * Register user
              */
-            Event::fire('rainlab.user.beforeRegister', [&$data]);
+            //Event::fire('rainlab.user.beforeRegister', [&$data]);
+
+            //return $data;
 
             $requireActivation = UserSettings::get('require_activation', true);
             $automaticActivation = UserSettings::get('activate_mode') == UserSettings::ACTIVATE_AUTO;
             $userActivation = UserSettings::get('activate_mode') == UserSettings::ACTIVATE_USER;
-            $user = Auth::register($data, $automaticActivation);
+           // $user = Auth::register($data, $automaticActivation);
 
-            Event::fire('rainlab.user.register', [$user, $data]);
+           // Event::fire('rainlab.user.register', [$user, $data]);
+            $data['is_activated'] = 1;
+            $data['username'] = $data['email'];
+            $user = new User;
+            $user->email = $data['email'];
+            $user->name = $data['name'];
+            $user->surname = $data['surname'];
+            $user->password = $data['password'];
+            $user->username = $data['index'];
+            $user->index = $data['index'];
+            $user->is_activated = 1;
+            $user->save();
+
+
+            $saveRandomPassword = new Password;
+            $saveRandomPassword->user_id = $user->id;
+            $saveRandomPassword->password = $password;
+            $saveRandomPassword->save();
+
+
+            $this->registerStudentToCourses($user->id);
 
             /*
              * Activation is by the user, send the email
@@ -289,6 +325,17 @@ class Account extends ComponentBase
         catch (Exception $ex) {
             if (Request::ajax()) throw $ex;
             else Flash::error($ex->getMessage());
+        }
+    }
+
+    public function registerStudentToCourses($id){
+        $courses = Course::all();
+        foreach ($courses as $course) {
+            $studentCourse = new StudentGrade;
+            $studentCourse->grade_id = 1;
+            $studentCourse->user_id = $id;
+            $studentCourse->crs_id = $course->id;
+            $studentCourse->save();
         }
     }
 
@@ -520,5 +567,10 @@ class Account extends ComponentBase
         }
 
         return Redirect::secure(Request::path());
+    }
+
+    protected function generatePassword()
+    {
+        return Str::random(8);
     }
 }

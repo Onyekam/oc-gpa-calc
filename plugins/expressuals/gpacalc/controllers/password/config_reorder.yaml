@@ -1,0 +1,4 @@
+title: Password
+modelClass: Expressuals\GpaCalc\Models\Password
+toolbar:
+    buttons: reorder_toolbar

@@ -1,0 +1,11 @@
+fields:
+    user:
+        label: User
+        nameFrom: name
+        span: auto
+        type: relation
+    password:
+        label: Password
+        span: auto
+        disabled: 1
+        type: text

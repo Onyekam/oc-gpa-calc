@@ -12,3 +12,6 @@
 1.0.5:
     - 'Created table expressuals_gpacalc_grades_users'
     - builder_table_create_expressuals_gpacalc_grades_users.php
+1.0.6:
+    - 'Created table expressuals_gpacalc_passwords'
+    - builder_table_create_expressuals_gpacalc_passwords.php

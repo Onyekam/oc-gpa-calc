@@ -1,0 +1,38 @@
+
+==
+{% set lvl100Courses = Courses.lvl100Courses %}
+{% set grades = Courses.grades %}
+{% set userCourses = Courses.studentCourses %}
+
+{# {% for crs in userCourses %}
+    {{crs.course.semester.level}}
+{% endfor %} #}
+{# {% for crs in userCourses %}
+    {{crs.grade.id}}
+{% endfor %} #}
+<form data-request="onGradeUpdate2">
+    <ul>
+        {% for course in lvl100Courses %}
+            <li>
+            
+                {# <a href="" data-request="onRemoveCourse">
+                    Remove Course
+                </a>  #}
+            {{course.course.course_name}} | {{course.course.course_hours}} credit hours - Grade: 
+                <select name="new_grade[]">
+                    {% for grade in grades %}
+                        <option value="{{grade.id}}" {% if course.grade.id == grade.id %} selected {% endif %} >
+                            {{grade.letter_grade}}
+                        </option>
+                    {% endfor %}
+                </select>
+                <input type="hidden" name="course[]" value="{{course.course.id}}">
+                <input type="hidden" name="grade[]" value="{{course.grade.id}}">
+                {# <button type="submit" class="btn btn-primary btn-sm primary-btns" style="cursor: pointer">Update Grade</button> #}
+            
+            </li> 
+        {% endfor %}
+    </ul>
+    <button type="submit" class="btn btn-primary primary-btns">Update Grade(s)</button>
+</form>
+
